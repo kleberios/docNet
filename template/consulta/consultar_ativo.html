@@ -1,0 +1,57 @@
+
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% load static %}
+
+{% block title%} SisDocNet {% endblock %}
+
+{% block main%}
+     <h4> Relação de Ativos</h4>
+
+         <table border=1 style="width:100%"  >
+              <font face="Verdana" size=2>
+             <tr>
+                 <td colspan="9" style="width:80%">Ativos de Rede</td>
+                 <td colspan="2">Usuário: &nbsp {% if user.is_authenticated %} {{user.username}} {% endif %}</td>
+                 <td align="middle" colspan="2"><a href="{% url 'login' %}">Sair</a></td>
+             </tr>
+              </font>
+             <tr>
+                <th style="width:5%">TIPO</th>
+                <th style="width:8%">MODELO</th>
+                <th style="width:8%">FABRICANTE</th>
+                <th style="width:20%">DESCRIÇÃO</th>
+                <th style="width:10%">MAC</th>
+                <th style="width:5%">IP</th>
+                <th style="width:7%">USUÁRIO</th>
+                <th style="width:5%">SENHA</th>
+                <th style="width:8%">LOCAL</th>
+                <th style="width:10%">ATUALIZAÇÃO</th>
+                <th colspan="3" style="width:10%">OUTROS</th>
+              </tr>
+
+            {% for ativo in form %}
+              <tr>
+                <td>{{ ativo.tipo.nome }}</td>
+                <td>{{ ativo.modelo }}</td>
+                <td>{{ ativo.fabricante }}</td>
+                <td>{{ ativo.descricao }}</td>
+                <td>{{ ativo.mac }}</td>
+                <td>{{ ativo.ip }}</td>
+                <td>{{ ativo.usuario }}</td>
+                <td>{{ ativo.senha }}</td>
+                <td>{{ ativo.local }}</td>
+                <td>{{ ativo.atualizacao }}</td>
+                <td>{{ ativo.outros }}</td>
+                <td align="middle">
+                    <a href="{% url 'atualiza_ativo' ativo.id%}">
+                    <img src="{% static 'imagens/editar.jpg' %}"  height="20" width="20"/></a></td>
+                <td align="middle">
+                    <a href="{% url 'deleta_ativo' ativo.id%}">
+                    <img src="{% static 'imagens/exluir.jpg' %}"  height="20" width="20"/></a></td>
+              </tr>
+            {% endfor %}
+         </table>
+
+{% endblock %}
